@@ -1,0 +1,64 @@
+{% extends "front_base.html" %}
+{% load static %}
+
+{% block headblock %}
+	{{block.super}}
+	<link rel="stylesheet" href='{% static "css/front_article_list.css" %}'>
+	<script src='{% static "js/front_article_list.js" %}'></script>
+	<script src='{% static "js/arttemplate.js" %}'></script>
+	<script src='{% static "js/xttemplate.js" %}'></script>
+	{% include "front_articlelist_tpl.html" %}
+{% endblock headblock %}
+
+{% block detailblock %}
+	<div class="row">
+		<h1 class="page-header">
+			{% if c_category %}
+				{{c_category.name}}
+			{% else %}
+				所有文章
+			{% endif %}
+		</h1>
+
+		<div class="row">
+			{% for article in top_articles %}
+				<div class="col-md-4 col-sm-4" class="top-article-box">
+					<div class="thumbnail">
+						<div class="thumbnail-box">
+							<a href="{% url 'front_article_detail' article_id=article.uid %}"><img src="{{article.thumbnail}}" alt=""></a>
+						</div>
+						<div class="caption">
+							<h3><a href="{% url 'front_article_detail' article_id=article.uid %}">{{article.title}}</a></h3>
+							<p>{{article.desc}}</p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>		
+
+		<div class="row" id="article-list-box">
+			{% for article in articles %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<a href="{% url 'front_article_detail' article_id=article.uid %}">{{article.title}}</a>
+					</div>
+					<div class="panel-body">
+						<p>
+							{% if article.desc %}
+								{{article.desc}}
+							{% else %}
+								{{article.content_html|truncatechars_html:100|striptags}}
+							{% endif %}
+						</p>
+						<div class="article-info">
+							<span>阅读：{{article.read_count}}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<span>评论：10</span>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<span>发表时间：{{article.release_time|date:"Y/m/d H:i"}}</span>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<button class="btn btn-primary load-article-btn" data-current-page="{{c_page}}" data-category-id="{{c_category.id}}" data-loading-text="加载中...">加载更多</button>
+	</div>
+{% endblock detailblock %}

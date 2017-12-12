@@ -1,0 +1,52 @@
+{% extends "front_base.html" %}
+{% load static %}
+
+{% block headblock %}
+	{{block.super}}
+	<link rel="stylesheet" href="{% static 'css/front_article_detail.css' %}">
+{% endblock headblock %}
+
+{% block detailblock %}
+	<h2 class="page-header article-title" data-category-id="{{c_category.id}}">
+		{{article.title}}
+	</h2>
+	<div class="article-info">
+		<span>发表时间：{{article.release_time|date:"Y/m/d H:i"}}</span>
+		<span>分类：{{article.category.name}}</span>
+		<span>作者：{{article.author.username}}</span>
+	</div>
+	<div class="tag-box">
+		{% for tag in tags %}
+			<span class="label label-default">{{tag.name}}</span>
+		{% endfor %}
+	</div>
+	<article class="article-content">
+		{{article.content_html|safe}}
+	</article>
+	<h4 class="comment-title">评论（{{comments|length}}）</h4>
+	<ul class="comment-ul">
+		{% for comment in comments %}
+			<li>
+				<div class="user-info">
+					<div class="user-left">
+						<a href="#"><img src="{% static 'images/python.jpg' %}" alt=""></a>
+					</div>
+					<div class="user-right">
+						<p><a href="#">{{comment.author.username}}</a></p>
+						<p>{{comment.create_time|date:'Y/m/d H:i'}}</p>
+					</div>
+				</div>
+				<div class="comment-content">
+					<p>{{comment.content}}</p>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+	<div class="comment-box">
+		<form action="{% url 'front_comment' %}" method="POST">
+			<textarea name="content" placeholder="请填写评论~" class="comment-textarea"></textarea>
+			<input type="hidden" name='article_id' value="{{article.uid}}">
+			<button class="btn btn-primary" type='submit'>评论</button>
+		</form>
+	</div>
+{% endblock detailblock %}

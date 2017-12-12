@@ -1,0 +1,30 @@
+{% extends "cms_base.html" %}
+{% load static %}
+{% block titleblock %}修改邮箱{% endblock titleblock %}
+
+{% block baseheadblock %}
+	<link rel="stylesheet" href="{% static 'css/cms_email.css' %}">
+{% endblock baseheadblock %}
+
+{% block pageboxblock %}
+	<div class="content-box">
+		<h1>修改邮箱</h1>
+		<div class="container">
+			<form action="" class="form-horizontal" role='form' method="POST">
+				<div class="form-group">
+					<label for="" class="col-md-3 col-sm-3 control-label">邮箱:</label>
+					<div class="col-md-9 col-sm-9">
+						<input type="email" class="form-control" required placeholder="{{user.email}}" name="email">
+					</div>
+				</div>
+				<p class="text text-danger">{{error}}</p>
+				<div>
+					<div class="col-md-3 col-sm-3"></div>
+					<div class="col-md-9 col-sm-9">
+						<button class="btn btn-primary" type="submit">提交</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock pageboxblock %}

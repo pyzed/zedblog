@@ -1,0 +1,25 @@
+/*
+* @Author: xiaotuo
+* @Date:   2016-11-10 21:04:13
+* @Last Modified by:   xiaotuo
+* @Last Modified time: 2016-11-11 22:27:12
+*/
+.table td:nth-of-type(1){
+	width: 50%;
+}
+
+.table th{
+	text-align: center;
+}
+
+.table th:nth-of-type(1){
+	text-align: left;
+}
+
+.page-nav{
+	text-align: center;
+}
+
+.top-title-word{
+	color: #ff5500;
+}

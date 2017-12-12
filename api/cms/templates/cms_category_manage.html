@@ -1,0 +1,52 @@
+{% extends "cms_base_manage.html" %}
+{% load static %}
+
+{% block baseheadblock %}
+	{{block.super}}
+	<link rel="stylesheet" href="{% static 'css/cms_category_manage.css' %}">
+	<script src="{% static 'js/cms_category_manage.js' %}"></script>
+{% endblock baseheadblock %}
+
+{% block detailblock %}
+	<div class="row">
+		<table class="table table-striped">
+			<thead>
+				<th>分类名称</th>
+				<th>文章数量</th>
+				<th>操作</th>
+			</thead>
+			<tbody>
+				{% for category in categorys %}
+					<tr data-category-id="{{category.id}}" class="category-tr">
+						<td>{{category.name}}</td>
+						<td>{{category.num_articles}}</td>
+						<td>
+							<a href="#" class="edit-category-btn">编辑</a> | 
+							<a href="#" class="delete-category-btn">删除</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock detailblock %}
+
+{% block inlinebodyblock %}
+	<div class="modal fade" id='category-modal'>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title">修改分类名称</h4>
+				</div>
+				<div class="modal-body">
+					<input type="text" class="form-control" placeholder="请输入分类名称..." id="category-input">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        <button type="button" class="btn btn-primary" id="category-submit-btn">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock inlinebodyblock %}

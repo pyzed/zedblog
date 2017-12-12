@@ -1,0 +1,25 @@
+{% extends "comm_bootstrap.html" %}
+{% load static %}
+
+{% block headblock %}
+	<link rel="stylesheet" href="{% static 'css/front_sign_base.css' %}">
+{% endblock headblock %}
+
+{% block bodyblock %}
+	<div class="container">
+		<div class="logo-box">
+			<img src="{% static 'images/logo.png' %}" alt="">
+		</div>
+		<div class="sign-box">
+			<div class="sign-box-inner">
+				<a href="{% url 'front_signin' %}">登录</a>
+				<b>·</b>
+				<a href="{% url 'front_signup' %}">注册</a>
+			</div>
+		</div>
+		<form action="" class="form sign-form" role='form' method='POST'>
+			{%csrf_token%}
+			{% block formblock %}{% endblock formblock %}
+		</form>
+	</div>
+{% endblock bodyblock %}

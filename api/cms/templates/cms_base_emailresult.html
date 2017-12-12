@@ -1,0 +1,17 @@
+{% extends "comm_bootstrap.html" %}
+
+{% block headblock %}
+	<script>
+		$(function() {
+			var secondTag = $('.second-down');
+			var secondCount = 10;
+			setInterval(function() {
+				secondCount -= 1;
+				secondTag.html(secondCount);
+				if(secondCount <= 0){
+					window.location = '/cms/';
+				}
+			},1000);
+		});
+	</script>
+{% endblock headblock %}

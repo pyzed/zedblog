@@ -1,0 +1,40 @@
+{% extends "front_sign_base.html" %}
+{% load static %}
+
+{% block headblock %}
+	{{block.super}}
+	<link rel="stylesheet" href='{% static "css/front_signin.css" %}'>
+{% endblock headblock %}
+
+{% block formblock %}
+	<div class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon glyphicon glyphicon-envelope"></span>
+			<input type="email" name='email' placeholder="邮箱" class="form-control" autofocus>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon glyphicon glyphicon-lock"></span>
+			<input type="password" name='password' placeholder="密码" class="form-control">
+		</div>
+	</div>
+	{% if error %}
+		<div class="form-group">
+			<p class="text-danger">{{error}}</p>
+		</div>
+	{% endif %}
+	<div class="form-group">
+		<button class="btn btn-primary btn-block">登录</button>
+	</div>
+	<div class="form-group">
+		<div class="checkbox remember-me">
+			<label>
+				<input type="checkbox" name='remember'>记住我
+			</label>
+		</div>
+		<div class="forgetpwd">
+			<a href="{% url 'front_forget_password' %}">忘记密码？</a>
+		</div>
+	</div>
+{% endblock formblock %}

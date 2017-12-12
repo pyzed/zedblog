@@ -1,0 +1,24 @@
+{% extends "comm_bootstrap.html" %}
+{% load static %}
+
+{% block headblock %}
+	<link rel="stylesheet" href='{% static "css/front_resetpwd.css" %}'>
+{% endblock headblock %}
+
+
+{% block bodyblock %}
+	<h1>重置密码</h1>
+	<div class="container">
+		<form action="" method="POST">
+			<div class="form-group">
+				<input type="password" class="form-control" placeholder="新密码" name="password">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" placeholder='确认密码' name="password_repeat">
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary btn-block">提交</button>
+			</div>
+		</form>
+	</div>
+{% endblock bodyblock %}

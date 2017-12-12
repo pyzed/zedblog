@@ -1,0 +1,31 @@
+/*
+* @Author: xiaotuo
+* @Date:   2016-11-02 22:45:34
+* @Last Modified by:   xiaotuo
+* @Last Modified time: 2016-11-04 20:48:35
+*/
+.content-box{
+	/*外边距塌陷*/
+	margin-top: 80px;
+	overflow: hidden;
+}
+
+h1{
+	text-align: center;
+}
+
+.container{
+	width: 400px;
+	padding-top: 20px;
+}
+
+.alert-success{
+	text-align: center;
+	display: none;
+}
+
+#pickfiles{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}

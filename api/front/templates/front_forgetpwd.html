@@ -1,0 +1,32 @@
+{% extends "comm_bootstrap.html" %}
+{% load static %}
+
+{% block headblock %}
+	<link rel="stylesheet" href="{% static 'css/front_forgetpwd.css' %}">
+	<script src='{% static "js/front_captcha.js" %}'></script>
+{% endblock headblock %}
+
+{% block bodyblock %}
+	<h1>找回密码</h1>
+	<div class="container">
+		<form action="" class="form" role="form" method="POST">
+			<div class="form-group">
+				<input type="email" name='email' class="form-control" placeholder="邮箱">
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<input type="text" name='captcha' class="form-control" placeholder="验证码">
+					<span class="input-group-addon captcha-span"><img src="{% url 'common_captcha' %}" alt="" class="captcha-img"></span>
+				</div>
+			</div>
+			{% if error %}
+				<div class="form-group">
+					<p class="text-danger">{{error}}</p>
+				</div>
+			{% endif %}
+			<div class="form-group">
+				<button class="btn btn-primary btn-block">发送重置邮件</button>
+			</div>
+		</form>
+	</div>
+{% endblock bodyblock %}

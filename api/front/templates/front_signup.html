@@ -1,0 +1,38 @@
+{% extends "front_sign_base.html" %}
+{% load static %}
+
+{% block headblock %}
+	{{block.super}}
+	<link rel="stylesheet" href='{% static "css/front_signup.css" %}'>
+	<script src='{% static "js/front_captcha.js" %}'></script>
+{% endblock headblock %}
+
+{% block formblock %}
+	<div class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon glyphicon glyphicon-envelope"></span>
+			<input type="email" name='email' placeholder="邮箱" class="form-control" autofocus>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon glyphicon glyphicon-user"></span>
+			<input type="text" name='username' placeholder="选一个用户名" class="form-control" autofocus>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon glyphicon glyphicon-lock"></span>
+			<input type="password" name='password' placeholder="密码" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon captcha-span"><img src="{% url 'common_captcha' %}" alt="" class="captcha-img"></span>
+			<input type="text" class="form-control" placeholder="验证码" name='captcha'>
+		</div>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-success btn-block">注册</button>
+	</div>
+{% endblock formblock %}

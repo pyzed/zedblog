@@ -1,0 +1,40 @@
+/*
+* @Author: xiaotuo
+* @Date:   2016-11-16 22:29:10
+* @Last Modified by:   Administrator
+* @Last Modified time: 2016-11-16 22:53:39
+*/
+
+
+.logo-box{
+	text-align: center;
+	margin-top: 100px;
+}
+
+.sign-box{
+	font-size: 20px;
+	text-align: center;
+	margin-top: 50px;
+	/*background: red;*/
+	height: 15px;
+	border-bottom: 1px solid #eee;
+}
+
+.sign-box a:hover{
+	text-decoration: none;
+}
+
+.sign-box .sign-box-inner{
+	background: #fff;
+	width: 200px;
+	margin: 0 auto;
+}
+
+.sign-form{
+	max-width: 300px;
+	margin: 50px auto;
+}
+
+.glyphicon{
+	top: 0;
+}

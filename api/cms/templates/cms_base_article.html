@@ -1,0 +1,144 @@
+{% extends "cms_base.html" %}
+{% load static %}
+
+{% block titleblock %}
+	添加博客
+{% endblock titleblock %}
+
+{% block baseheadblock %}
+	<link rel="stylesheet" href="{% static 'css/cms_add_article.css' %}">
+	<link rel="stylesheet" href="{% static 'simditor/styles/simditor.css' %}">
+	<script src="{% static 'simditor/scripts/module.min.js' %}"></script>
+	<script src="{% static 'simditor/scripts/hotkeys.min.js' %}"></script>
+	<script src="{% static 'simditor/scripts/uploader.min.js' %}"></script>
+	<script src="{% static 'simditor/scripts/simditor.min.js' %}"></script>
+	<script src="https://cdn.staticfile.org/Plupload/2.1.1/moxie.js"></script>
+	<script src="https://cdn.staticfile.org/Plupload/2.1.1/plupload.dev.js"></script>
+	<script src="https://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.js"></script>
+	<script src="{% static 'js/arttemplate.js' %}"></script>
+	<script src="{% static "js/xtqiniu.js" %}"></script>
+	<script src='{% static "js/cms_base_article.js" %}'></script>
+	{% include "cms_tag_template.html" %}
+{% endblock baseheadblock %}
+
+{% block pageboxblock %}
+	<div class="content-box">
+		<h1>{% block pagetitleblock %}
+		{% endblock pagetitleblock %}</h1>
+		<div class="container">
+			<form action="" class="form">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon" >标题</span>
+						<input type="text" class="form-control" placeholder="标题" id='title-input' value="{{article.title}}" data-article-id={{article.uid}}>
+						<span class="input-group-addon btn btn-danger" id='submit-article-btn'>{% block publishtitleblock %}{% endblock publishtitleblock %}</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">分类</span>
+						<select name="" id="category-select" class="form-control">
+							{% for category in categorys %}
+								<option value="{{category.id}}" {% if article.category.id == category.id %}selected="selected"{% endif %}>{{category.name}}</option>
+							{% endfor %}
+						</select>
+						<span class="input-group-addon btn btn-primary" id="category-btn">添加分类</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">描述</span>
+						<input type="text" class="form-control" placeholder="描述" id="desc-input" value="{{article.desc}}">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">图片</span>
+						<input type="text" class="form-control" placeholder="缩略图地址" id='thumbnail-input' value="{{article.thumbnail}}">
+						<span class="input-group-addon btn btn-info" id='thumbnail-btn'>上传图片</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">标签</span>
+						<div class="form-control" id='tag-box'>
+							{# article.tags-->装的都是tag的id才好比较 #}
+							{% for tag in tags %}
+								<label for="" class="checkbox-inline">
+									<input type="checkbox" value="{{tag.id}}" class="tag-checkbox" {% if tag.id in article.tags %}
+										checked="checked" 
+									{% endif %}> {{tag.name}}
+								</label>
+							{%empty%}
+								<span>暂无标签</span>
+							{% endfor %}
+						</div>
+						<span class="input-group-addon btn btn-info" id="tag-btn">添加标签</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<textarea id="simditor" placeholder="正文...">{{article.content_html}}</textarea>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock pageboxblock %}
+
+{% block inlinebodyblock %}
+	{# 添加分类dialog #}
+	<div class="modal fade" id='category-modal'>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title">添加分类</h4>
+				</div>
+				<div class="modal-body">
+					<input type="text" class="form-control" placeholder="请输入分类..." id="category-input">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        <button type="button" class="btn btn-primary" id="category-submit-btn">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{# 添加标签dialog #}
+	<div class="modal fade" id='tag-modal'>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title">添加标签</h4>
+				</div>
+				<div class="modal-body">
+					<input type="text" class="form-control" placeholder="请输入标签..." id="tag-input">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        <button type="button" class="btn btn-primary" id="tag-submit-btn">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{# 文章发布成功的diaolog #}
+	<div class="modal fade" id='submit-success-modal'>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title">提示</h4>
+				</div>
+				<div class="modal-body">
+					<p>恭喜!文章发表成功!</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="back-home-btn">回到首页</button>
+			        <button type="button" class="btn btn-primary" id="write-again-btn">再写一篇</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock inlinebodyblock %}

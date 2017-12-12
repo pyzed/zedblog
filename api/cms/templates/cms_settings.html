@@ -1,0 +1,58 @@
+{% extends "cms_base.html" %}
+{% load static %}
+
+{% block titleblock %}
+	个人设置
+{% endblock titleblock %}
+
+{% block baseheadblock %}
+	<link rel="stylesheet" href="{% static 'css/cms_settings.css' %}">
+	<script src="{% static 'js/cms_settings.js' %}"></script>
+	<script src="https://cdn.staticfile.org/Plupload/2.1.1/moxie.js"></script>
+	<script src="https://cdn.staticfile.org/Plupload/2.1.1/plupload.dev.js"></script>
+	<script src="https://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.js"></script>
+	<script src="{% static "js/xtqiniu.js" %}"></script>
+{% endblock baseheadblock %}
+
+{% block pageboxblock %}
+	<div class="content-box">
+		<h1>个人设置</h1>
+		<div class="container">
+			<div class="alert alert-success" role="alert"></div>
+			<form action="" class="form-horizontal" method="POST">
+				<div class="form-group">
+					<label for="" class="control-label col-md-3 col-sm-3">用户名</label>
+					<div class="col-md-9 col-sm-9">
+						<input type="text" class="form-control username-input" placeholder="用户名" required value='{{user.username}}' name="username">	
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="control-label col-md-3 col-sm-3">邮箱</label>
+					<div class="col-md-7 col-sm-7">
+						<input type="email" class="form-control" placeholder="邮箱" value="{{user.email}}" readonly name="email">	
+					</div>
+					<div class="col-md-2 col-sm-2">
+						<a class="btn btn-success" href="{% url 'cms_update_email' %}">修改邮箱</a>
+					</div>
+				</div>
+				<div class="form-group" id="container">
+					<label for="" class="control-label col-md-3 col-sm-3">头像</label>
+					<div class="col-md-9 col-sm-9">
+						{% if not user.avatar %}
+							<img src="{% static 'images/default_avatar.jpg' %}" alt="" id='pickfiles'>
+						{% else %}
+							<img src="{{user.avatar}}" alt=""  id='pickfiles'>
+						{% endif %}
+					</div>
+
+				</div>
+				<div class="form-group">
+					<div class="col-md-3 col-sm-3"></div>
+					<div class="col-md-9 col-sm-9">
+						<button class="btn btn-primary submit-btn">保存</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock pageboxblock %}
